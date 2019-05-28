@@ -185,13 +185,12 @@
     //
       $_bg: if($c!=$bg_color, $c, $osd_borders_color);
   
-      color: if($c==$bubble_bg_color, $selected_bg_color, white);
+      color: white;
       border-color: $osd_borders_color;
-      background-color: if($c==$bubble_bg_color, darken($c, 15%), $selected_bg_color);
+      background-color: $selected_bg_color;
       // This should be none, but it's creating some issues with borders, so to
       // workaround it for now, use inset wich goes through a different code path.
       // see https://bugzilla.gnome.org/show_bug.cgi?id=752934
-      box-shadow: if($c==$bubble_bg_color, none, inset 0 0 black);
       text-shadow: none;
       icon-shadow: none;
     }

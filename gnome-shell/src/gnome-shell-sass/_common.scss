@@ -59,6 +59,7 @@ stage {
   &:focus { @include button(focus, $c:$bubble_bg_color, $tc:$bubble_fg_color); }
   &:active { @include button(active, $c:$bubble_bg_color, $tc:$bubble_fg_color); }
   padding: 12px;
+  border-top: 1px solid $bubble_borders_color;
 
   &:first-child {
     border-radius: 0px 0px 0px $medium_radius;
@@ -182,9 +183,7 @@ StScrollBar {
 
 .modal-dialog {
   border-radius: 9px;
-  color: $osd_fg_color;
-  background-color: transparentize(darken($osd_bg_color,10%),0.05);
-  border: 1px solid $osd_outer_borders_color;
+  @extend %bubble-panel;
   .modal-dialog-content-box {
     padding: 24px;
   }
@@ -197,7 +196,7 @@ StScrollBar {
   .run-dialog-label {
     @include fontsize($font-size + 1.1);
     font-weight: bold;
-    color: darken($osd_fg_color,10%);
+    color: darken($bubble_fg_color,10%);
     padding-bottom: .4em;
   }
 
@@ -273,7 +272,7 @@ StScrollBar {
   }
 
   .end-session-dialog-shutdown-icon {
-    color: $fg_color;
+    color: $bubble_fg_color;
     width: 48px;
     height: 48px;
   }
@@ -372,8 +371,8 @@ StScrollBar {
 
 .prompt-dialog {
   //this is the width of the entire modal popup
+  @extend %bubble-panel; 
   width: 34em;
-  border: 3px solid $osd_outer_borders_color;
 
   .message-dialog-main-layout { spacing: 24px; padding: 10px; }
   .message-dialog-content { spacing: 16px; }
@@ -434,6 +433,7 @@ StScrollBar {
 
 /* Audio selection dialog */
 .audio-device-selection-dialog {
+  @extend %bubble-panel;
   spacing: 30px;
 }
 
@@ -468,22 +468,26 @@ StScrollBar {
 
 /* Access Dialog */
 .access-dialog {
+  @extend %bubble-panel;
   spacing: 30px;
 }
 
 /* Geolocation Dialog */
 .geolocation-dialog {
+  @extend %bubble-panel;
   spacing: 30px;
 }
 
 /* Extension Dialog */
 .extension-dialog {
+  @extend %bubble-panel;
   .message-dialog-main-layout { spacing: 24px; padding: 10px; }
   .message-dialog-title { color: darken($osd_fg_color,25%); }
 }
 
 /* Inhibit-Shortcuts Dialog */
 .inhibit-shortcuts-dialog {
+  @extend %bubble-panel;
   spacing: 30px;
 }
 
@@ -709,6 +713,27 @@ StScrollBar {
   padding: 12px;
 }
 
+%bubble-panel {
+  color: $bubble_fg_color;
+  background-color: $bubble_bg_color;
+  border: 1px solid $bubble_borders_color;
+  box-shadow: 0 3px 9px 1px transparentize(black, 0.5); // to match with the notification banner but maybe no?
+
+  StEntry {
+    color: $bubble_fg_color;
+    background-color: darken($bubble_bg_color, 5%);
+    border-color: $bubble_borders_color;
+    box-shadow: none;
+  }
+  .button {
+    background-color: white;
+    color: $bubble_fg_color;
+    border-color: $bubble_borders_color;
+    &:hover { background-color: darken($bubble_bg_color, 12%); }
+    &:active { background-color: darken($bubble_bg_color, 15%); box-shadow: none; }
+  }
+}
+
 /* Tiled window previews */
 .tile-preview {
   background-color: transparentize($selected_bg_color,0.5);
@@ -857,11 +882,8 @@ StScrollBar {
     .world-clocks-button,
     .weather-button,
     .events-section-title {
-      &:hover,&:focus { background-color: lighten($bg_color,5%); }
-      &:active {
-        color: lighten($selected_fg_color,5%);
-        background-color: $selected_bg_color;
-      }
+      &:hover, focus { background-color: darken($bubble_bg_color, 12%); }
+      &:active { background-color: darken($bubble_bg_color, 15%); }
     }
 
     .datemenu-today-button .day-label {
@@ -906,7 +928,7 @@ StScrollBar {
     }
 
     .world-clocks-timezone {
-      color: darken($fg_color,40%);
+      color: $bubble_fg_color;
       font-feature-settings: "tnum";
       font-size: 0.9em;
     }
@@ -921,7 +943,7 @@ StScrollBar {
     }
 
     .calendar-month-label {
-      color: darken($fg_color,5%);
+      color: darken($bubble_fg_color,5%);
       font-weight: bold;
       padding: 8px 0;
       &:focus {}
@@ -931,8 +953,8 @@ StScrollBar {
       background-color: transparent;
       width: 32px;
       border-radius: 4px;
-      &:hover, &:focus { background-color: transparentize($fg_color,0.95); }
-      &:active { background-color: transparentize($bg_color,0.95); }
+      &:hover, focus { background-color: darken($bubble_bg_color, 12%); }
+      &:active { background-color: darken($bubble_bg_color, 15%); }
     }
 
       .calendar-change-month-back StIcon, .calendar-change-month-forward StIcon { // arrows
@@ -947,14 +969,14 @@ StScrollBar {
       margin: 2px;
       border-radius: 1.4em;
       font-feature-settings: "tnum";
-      &:hover,&:focus { background-color: lighten($bg_color,5%); }
+      &:hover, focus { background-color: darken($bubble_bg_color, 12%); }
       &:active,&:selected {
         color: lighten($selected_fg_color,5%);
         background-color: $selected_bg_color;
         border-color: transparent; //avoid jumparound due to today
       }
       &.calendar-day-heading {  //day of week heading
-        color: darken($fg_color,40%);
+        color: lighten($bubble_fg_color,5%);
         margin-top: 1em;
         font-size: 70%;
       }
@@ -974,15 +996,15 @@ StScrollBar {
         font-weight: bold;
         //color: lighten($fg_color,10%);
         //background-color: darken($bg_color,5%);
-        border: 1px solid transparentize($borders_color,0.5);
+        border: 1px solid $bubble_borders_color;
       }
       .calendar-day-with-events {
-        color: lighten($fg_color,10%);
+        color: lighten($bubble_fg_color,10%);
         font-weight: bold;
         background-image: url("resource:///org/gnome/shell/theme/calendar-today.svg");
       }
       .calendar-other-month-day {
-        color: transparentize($fg_color,0.85);
+        color: transparentize($bubble_fg_color,0.85);
         opacity: 0.5;
       }
       .calendar-week-number {
@@ -992,8 +1014,8 @@ StScrollBar {
         border-radius: 2px;
         padding: 0.5em 0 0;
         margin: 6px;
-        background-color: transparentize($fg_color,0.7);
-        color: $bg_color;
+        background-color: $bubble_borders_color;
+        color: $bubble_fg_color;
       }
 
       /* Message list */
@@ -1002,7 +1024,7 @@ StScrollBar {
       }
 
         .message-list-clear-button.button {
-          background-color: transparent;
+          background-color: white;
           color: $bubble_fg_color;
           box-shadow: none;
           border-color: $bubble_borders_color;
@@ -1021,8 +1043,11 @@ StScrollBar {
         }
 
         .message {
-          &:hover,&:focus { background-color: lighten($bg_color,5%); }
-          border-radius: 3px;
+          border: 1px solid $bubble_borders_color;
+          
+          &:hover,&:focus { background-color: $bubble_hover_bg_color; }
+          &:active { background-color: $bubble_active_bg_color; }
+          border-radius: 5px;
         }
 
           .message-icon-bin {
@@ -1031,7 +1056,7 @@ StScrollBar {
           }
 
           .message-icon-bin > StIcon {
-            color: darken($fg_color,20%);
+            color: $bubble_fg_color;
             icon-size: 1.09em;
             -st-icon-style: symbolic;
           }
@@ -1046,7 +1071,7 @@ StScrollBar {
           }
 
           .message-secondary-bin > .event-time {
-            color: darken($fg_color,40%);
+            color: $bubble_fg_color;
             font-size: 0.7em;
             /* HACK: the label should be baseline-aligned with a 1em label,
                      fake this with some bottom padding */
@@ -1058,11 +1083,11 @@ StScrollBar {
           }
 
           .message-title {
-            color: darken($fg_color,5%);
+            color: $bubble_fg_color;
           }
 
           .message-content {
-            color: darken($fg_color,20%);
+            color: darken($bubble_fg_color, 10%);
             padding: 10px;
           }
 
@@ -1177,6 +1202,7 @@ StScrollBar {
 /* NETWORK DIALOGS */
 
 .nm-dialog {
+  @extend %bubble-panel;
   max-height: 34em;
   min-height: 31em;
   min-width: 32em;
@@ -1558,6 +1584,7 @@ StScrollBar {
       &:focus { box-shadow: none; }
       &:active { 
         background-color: $bubble_active_bg_color;
+        color: $bubble_fg_color;
       }
       padding: 0 16px;
       min-height: 35px;
@@ -1607,6 +1634,8 @@ StScrollBar {
     padding: 2px 72px 2px 12px;
   }
     .hotplug-notification-item {
+      @extend %notification_button;
+      border: none; box-shadow: none;
       padding: 2px 10px;
       &:focus { padding: 1px 71px 1px 11px; }
     }
