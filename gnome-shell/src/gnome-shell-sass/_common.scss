@@ -30,9 +30,6 @@ $medium_radius: 9px;
 /* GLOBALS */
 $font-size: 11;
 $font-family: Cantarell, Sans-Serif;
-$_bubble_bg_color: opacify($osd_bg_color,0.25);
-$_bubble_fg_color: $osd_fg_color;
-$_bubble_borders_color: transparentize($osd_fg_color,0.8);
 
 stage {
   font-family: $font-family;
@@ -56,11 +53,11 @@ stage {
 
 .modal-dialog-linked-button, %notification_button {
   border-right-width: 1px;
-  @include button(normal);
-  &:insensitive { @include button(insensitive); }
-  &:hover { @include button(hover); }
-  &:focus { @include button(focus); }
-  &:active { @include button(active); }
+  @include button(normal, $c:$bubble_bg_color, $tc:$bubble_fg_color);
+  &:insensitive { @include button(insensitive, $c:$bubble_bg_color, $tc:$bubble_fg_color); }
+  &:hover { @include button(hover, $c:$bubble_bg_color, $tc:$bubble_fg_color); }
+  &:focus { @include button(focus, $c:$bubble_bg_color, $tc:$bubble_fg_color); }
+  &:active { @include button(active, $c:$bubble_bg_color, $tc:$bubble_fg_color); }
   padding: 12px;
 
   &:first-child {
@@ -130,8 +127,9 @@ StScrollBar {
 
 .slider {
   height: 1em;
+  color: $selected_bg_color;
   -barlevel-height: 0.3em;
-  -barlevel-background-color: transparentize(darken($osd_bg_color,15%),0.5); //background of the trough
+  -barlevel-background-color: lighten($bubble_fg_color, 15%); //background of the trough
   -barlevel-border-color: transparent; //trough border color
   -barlevel-active-background-color: $selected_bg_color; //active trough fill
   -barlevel-active-border-color: transparent; //active trough border
@@ -505,12 +503,14 @@ StScrollBar {
 
 .popup-menu {
   min-width: 15em;
+  color: $bubble_fg_color;
+  border-color: $bubble_borders_color;
 
   .popup-menu-arrow { } //defined globally in the TOP BAR
   .popup-sub-menu {
     padding-bottom: 1px;
-    background-color: darken($bg_color,2%);
-    box-shadow: inset 0 -1px 0px lighten($borders_color,5%);
+    background-color: darken($bubble_bg_color,5%);
+    box-shadow: inset 0 -1px 0px $bubble_borders_color;
   }
 
   .popup-menu-content { padding: 1em 0em; }
@@ -520,19 +520,19 @@ StScrollBar {
     &:ltr { padding: .4em 1.75em .4em 0em; }
     &:rtl { padding: .4em 0em .4em 1.75em; }
     &:checked {
-      background-color: darken($bg_color,2%);
-      box-shadow: inset 0 1px 0px lighten($borders_color,5%);
+      background-color: darken($bubble_bg_color,5%);
+      box-shadow: inset 0 1px 0px $bubble_borders_color;
       font-weight: bold;
     }
-    &.selected { background-color: transparentize($fg_color,0.9); color: $fg_color; }
-    &:active { background-color: $selected_bg_color; color: $selected_fg_color; }
-    &:insensitive { color: transparentize($fg_color,.5); }
+    &.selected { background-color: transparentize($bubble_fg_color,0.9); color: $bubble_fg_color; }
+    &:active { background-color: $bubble_active_bg_color; color: $selected_bg_color; }
+    &:insensitive { color: transparentize($bubble_fg_color,.5); }
   }
 
   .popup-inactive-menu-item { //all icons and other graphical elements
-    color: $fg_color;
+    color: $bubble_fg_color;
 
-    &:insensitive { color: transparentize($fg_color,0.5); }
+    &:insensitive { color: transparentize($bubble_fg_color,0.5); }
   }
   //.popup-status-menu-item { font-weight: normal;  color: pink; } //dunno what that is
   &.panel-menu {
@@ -550,9 +550,9 @@ StScrollBar {
   .popup-menu-boxpointer,
   .candidate-popup-boxpointer {
     -arrow-border-radius: $medium_radius;
-    -arrow-background-color: $osd_bg_color;
+    -arrow-background-color: $bubble_bg_color;
     -arrow-border-width: 1px;
-    -arrow-border-color: $osd_outer_borders_color;
+    -arrow-border-color: $bubble_outer_borders_color;
     -arrow-base: 24px;
     -arrow-rise: 11px;
     -arrow-box-shadow: 0 1px 3px black; //dreaming. bug #689995
@@ -563,7 +563,7 @@ StScrollBar {
     height: 1px; //not really the whole box
     margin: 6px 64px;
     background-color: transparent;
-    border-color: lighten($borders_color,10%);
+    border-color: $bubble_borders_color;
     border-bottom-width: 1px;
     border-bottom-style: solid;
   }
@@ -702,7 +702,7 @@ StScrollBar {
   }
 
 %osd-panel {
-  color: $_bubble_fg_color;
+  color: $fg_color;
   background-color: $osd_bg_color;
   border: 1px solid $osd_outer_borders_color;
   border-radius: 12px;
@@ -832,7 +832,7 @@ StScrollBar {
     .datemenu-displays-box { spacing: 1em; }
 
     .datemenu-calendar-column {
-      border: 0 solid lighten($bg_color,5%);
+      border: 0 solid darken($bubble_bg_color, 15%);
       &:ltr { border-left-width: 1px; }
       &:rtl { border-right-width: 1px; }
     }
@@ -1003,7 +1003,11 @@ StScrollBar {
 
         .message-list-clear-button.button {
           background-color: transparent;
-          &:hover,&:focus { background-color: lighten($bg_color,5%); }
+          color: $bubble_fg_color;
+          box-shadow: none;
+          border-color: $bubble_borders_color;
+          &:hover,&:focus { background-color: $bubble_hover_bg_color; }
+          &:active { background-color: $bubble_active_bg_color; }
           margin: 1.5em 1.5em 0;
         }
 
@@ -1116,18 +1120,18 @@ StScrollBar {
 
   .system-menu-action {
     -st-icon-style: symbolic;
-    color: $fg_color;
+    color: $bubble_fg_color;
     border-radius: 32px; /* wish we could do 50% */
     padding: 13px;
-    border: 1px solid lighten($borders_color,5%);
+    border: 1px solid $bubble_borders_color;
 
     &:hover, &:focus {
-      background-color: transparentize($fg_color,0.9);
-      color: $fg_color;
+      background-color: $bubble_hover_bg_color;
+      color: $bubble_fg_color;
       border: none;
       padding: 14px;
     }
-    &:active { background-color: $selected_bg_color; color: $selected_fg_color; }
+    &:active { background-color: $bubble_active_bg_color; color: $selected_bg_color; }
 
     & > StIcon { icon-size: 16px; }
   }
@@ -1521,25 +1525,41 @@ StScrollBar {
     width: 34em;
     margin: 5px;
     border-radius: $medium-radius;
-    border: 1px solid $osd_outer_borders_color;
+    border: none;
+    min-height: 64px;
     box-shadow: 0 3px 9px 1px transparentize(black, 0.5);
-    &:hover { background: $osd_bg_color; }
+    &:hover { background: $bubble_bg_color; }
     &, &:focus, &:active {
-      background-color: $osd_bg_color;
+      background-color: $bubble_bg_color;
+      .message-title { color: $bubble_fg_color }
+      .message-content { color: $bubble_fg_color; }
     }
 
-    .notification-icon { padding: 5px; }
+    .message-icon-bin > StIcon {
+      color: $bubble_fg_color;
+    }
+
+    StEntry {
+      background-color: darken($bubble_bg_color, 5%);
+      border-color: $bubble_borders_color;
+    }
+
+    .notification-icon { padding: 5px; }  
     .notification-content { padding: 5px; spacing: 5px; }
     .secondary-icon { icon-size: 1.09em; }
     .notification-actions {
       padding-top: 0;
-      border-top: 1px solid $osd_borders_color;
+      color: $bubble_fg_color;
+      border-top: 1px solid $bubble_borders_color;
       spacing: 0px;
     }
     .notification-button {
       @extend %notification_button;
+      &:focus { box-shadow: none; }
+      &:active { 
+        background-color: $bubble_active_bg_color;
+      }
       padding: 0 16px;
-      background-color: transparent;
       min-height: 35px;
       border: none;
     }
@@ -1552,7 +1572,7 @@ StScrollBar {
     -shell-counter-overlap-y: 3px;
     background-color: $selected_bg_color;
     color: $selected_fg_color;
-    border: 2px solid $osd_fg_color;
+    border: 2px solid $bubble_fg_color;
     box-shadow: 0 2px 2px rgba(0,0,0,0.5);
     border-radius: 0.9em; // should be 0.8 but whatever; wish I could do 50%;
   }
@@ -1562,7 +1582,7 @@ StScrollBar {
   //chat bubbles
   .chat-body { spacing: 5px; }
   .chat-response { margin: 5px; }
-  .chat-log-message { color: darken($fg_color,10%); }
+  .chat-log-message { color: darken($bubble_fg_color,10%); }
   .chat-new-group { padding-top: 1em; }
   .chat-received {
     padding-left: 4px;
@@ -1921,7 +1941,7 @@ StScrollBar {
     padding: 12px 6px;
     border: 1px solid $osd_outer_borders_color;
     background-color: transparentize($osd_bg_color,0.5);
-    color: $_bubble_fg_color;
+    color: $osd_fg_color;
     border-radius: 4px;
   }
   .notification { margin-right: 15px; } //compensate for space allocated to the scrollbar

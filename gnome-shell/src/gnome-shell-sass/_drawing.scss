@@ -133,24 +133,19 @@
     //
     // normal button
     //
-      $_bg: if($c!=$osd_bg_color, transparentize($c, 0.5),
-                              $osd_bg_color);
   
-      color: $osd_fg_color;
-      background-color: $_bg;
+      color: if($bubble_bg_color, $tc, $osd_fg_color);
+      background-color: if($osd_bg_color or $bubble_bg_color, $c, transparentize($c, 0.5));
       border-color: $osd_borders_color;
-      box-shadow: inset 0 1px lighten($osd_bg_color,10%);
+      box-shadow: none;
       text-shadow: 0 1px black;
       icon-shadow: 0 1px black;
     }
     @if $t==focus {
     //
     // focused button
-    //
-      $_bg: if($c!=$osd_bg_color, transparentize($c, 0.3),
-                            lighten($osd_bg_color,3%));
-  
-      color: $osd_fg_color;
+    //  
+      color: if($bubble_bg_color, $tc, $osd_fg_color);
       text-shadow: 0 1px black;
       icon-shadow: 0 1px black;
       box-shadow: inset 0px 0px 0px 1px $selected_bg_color;
@@ -160,13 +155,26 @@
     //
     // active osd button
     //
-      $_bg: if($c!=$osd_bg_color, transparentize($c, 0.3),
-                              lighten($osd_bg_color,3%));
-  
-      color: white;
-      border-color: $osd_borders_color;
+      $_bg: $c;
+      $_fg: white;
+      $_bs: none;
+      $_bc: $osd_borders_color;
+      @if $c==$osd_bg_color {
+        $_bg: lighten($osd_bg_color,3%);
+        $_bs: inset 0 1px lighten($osd_bg_color,20%);
+      }
+      @else if $c==$bubble_bg_color {
+        $_bg: darken($c, 12%);
+        $_fg: $bubble_fg_color;
+        $_bc: $bubble_borders_color;
+      }
+      @else {
+        $_bg: transparentize($c, 0.3);
+      }
+      color: $_fg;
+      border-color: $_bc;
       background-color: $_bg;
-      box-shadow: inset 0 1px lighten($osd_bg_color,20%);
+      box-shadow: $_bs;
       text-shadow: 0 1px black;
       icon-shadow: 0 1px black;
   
@@ -177,13 +185,13 @@
     //
       $_bg: if($c!=$bg_color, $c, $osd_borders_color);
   
-      color: white;
+      color: if($c==$bubble_bg_color, $selected_bg_color, white);
       border-color: $osd_borders_color;
-      background-color: $selected_bg_color;
+      background-color: if($c==$bubble_bg_color, darken($c, 15%), $selected_bg_color);
       // This should be none, but it's creating some issues with borders, so to
       // workaround it for now, use inset wich goes through a different code path.
       // see https://bugzilla.gnome.org/show_bug.cgi?id=752934
-      box-shadow: inset 0 0 black;
+      box-shadow: if($c==$bubble_bg_color, none, inset 0 0 black);
       text-shadow: none;
       icon-shadow: none;
     }
