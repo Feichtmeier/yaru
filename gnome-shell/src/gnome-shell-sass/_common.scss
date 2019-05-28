@@ -128,9 +128,8 @@ StScrollBar {
 
 .slider {
   height: 1em;
-  color: $selected_bg_color;
   -barlevel-height: 0.3em;
-  -barlevel-background-color: lighten($bubble_fg_color, 15%); //background of the trough
+  -barlevel-background-color: lighten($bubble_fg_color, 25%); //background of the trough
   -barlevel-border-color: transparent; //trough border color
   -barlevel-active-background-color: $selected_bg_color; //active trough fill
   -barlevel-active-border-color: transparent; //active trough border
@@ -195,8 +194,8 @@ StScrollBar {
   .run-dialog-button-box { padding-top: 1em; }
   .run-dialog-label {
     @include fontsize($font-size + 1.1);
-    font-weight: bold;
-    color: darken($bubble_fg_color,10%);
+    font-weight: normal;
+    color: $bubble_fg_color;
     padding-bottom: .4em;
   }
 
@@ -228,7 +227,7 @@ StScrollBar {
   }
 
   .message-dialog-subtitle {
-    color: darken($fg_color,40%);
+    color: $bubble_fg_color;
     font-weight: bold;
   }
 
@@ -482,7 +481,7 @@ StScrollBar {
 .extension-dialog {
   @extend %bubble-panel;
   .message-dialog-main-layout { spacing: 24px; padding: 10px; }
-  .message-dialog-title { color: darken($osd_fg_color,25%); }
+  .message-dialog-title { font-weight: normal; color: $bubble_fg_color; }
 }
 
 /* Inhibit-Shortcuts Dialog */
@@ -529,7 +528,7 @@ StScrollBar {
       font-weight: bold;
     }
     &.selected { background-color: transparentize($bubble_fg_color,0.9); color: $bubble_fg_color; }
-    &:active { background-color: $bubble_active_bg_color; color: $selected_bg_color; }
+    &:active { background-color: $bubble_active_bg_color; }
     &:insensitive { color: transparentize($bubble_fg_color,.5); }
   }
 
@@ -640,7 +639,7 @@ StScrollBar {
   }
 
   .switcher-list .item-box:selected {
-    background-color: $selected_bg_color;
+    background-color: transparentize($color: $osd_fg_color, $amount: 0.7);
     color: $selected_fg_color;
   }
 
@@ -1044,7 +1043,7 @@ StScrollBar {
 
         .message {
           border: 1px solid $bubble_borders_color;
-          
+          background-color: lighten($bubble_bg_color, 2%);
           &:hover,&:focus { background-color: $bubble_hover_bg_color; }
           &:active { background-color: $bubble_active_bg_color; }
           border-radius: 5px;
@@ -1083,7 +1082,7 @@ StScrollBar {
           }
 
           .message-title {
-            color: $bubble_fg_color;
+            color: $bubble_fg_color;            
           }
 
           .message-content {
@@ -1093,11 +1092,11 @@ StScrollBar {
 
           .message-media-control {
             padding: 12px;
-            color: darken($fg_color, 20%);
+            color: lighten($bubble_fg_color, 15%);
 
             &:last-child:ltr { padding-right: 18px; }
             &:last-child:rtl { padding-left: 18px; }
-            &:hover { color: $fg_color; }
+            &:hover { color: $bubble_fg_color; }
             &:insensitive { color: darken($fg_color,40%); }
           }
 
@@ -1156,7 +1155,7 @@ StScrollBar {
       border: none;
       padding: 14px;
     }
-    &:active { background-color: $bubble_active_bg_color; color: $selected_bg_color; }
+    &:active { background-color: $bubble_active_bg_color; }
 
     & > StIcon { icon-size: 16px; }
   }
