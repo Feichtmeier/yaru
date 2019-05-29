@@ -157,11 +157,9 @@
     //
       $_bg: $c;
       $_fg: white;
-      $_bs: none;
       $_bc: $osd_borders_color;
       @if $c==$osd_bg_color {
         $_bg: lighten($osd_bg_color,3%);
-        $_bs: inset 0 1px lighten($osd_bg_color,20%);
       }
       @else if $c==$bubble_bg_color {
         $_bg: $bubble_hover_bg_color;
@@ -174,7 +172,7 @@
       color: $_fg;
       border-color: $_bc;
       background-color: $_bg;
-      box-shadow: $_bs;
+      box-shadow: none;
       text-shadow: 0 1px black;
       icon-shadow: 0 1px black;
   
