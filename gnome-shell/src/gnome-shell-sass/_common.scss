@@ -455,7 +455,10 @@ StScrollBar {
     border: 1px solid $bubble_borders_color;
     border-radius: 12px;
     &:hover,&:focus { background-color: $bubble_hover_bg_color; }
-    &:active { background-color: $bubble_active_bg_color; }
+    &:active { 
+      background-color: $bubble_active_bg_color;
+      color: $bubble_active_fg_color;
+    }
   }
 
   .audio-selection-device-box {
@@ -529,7 +532,10 @@ StScrollBar {
       font-weight: bold;
     }
     &.selected { background-color: $bubble_hover_bg_color; color: $bubble_fg_color; }
-    &:active { background-color: $bubble_active_bg_color; }
+    &:active { 
+      background-color: $bubble_active_bg_color;
+      color: $bubble_active_fg_color;
+     }
     &:insensitive { color: transparentize($bubble_fg_color,.5); }
   }
 
@@ -736,7 +742,10 @@ StScrollBar {
     background-color: white;
     color: $bubble_fg_color;
     &:hover { background-color: $bubble_hover_bg_color; }
-    &:active { background-color: $bubble_active_bg_color; }
+    &:active { 
+      background-color: $bubble_active_bg_color;
+      color: $bubble_active_fg_color;
+    }
     &:disabled { color: $insensitive_fg_color; }
   }
 }
@@ -1036,7 +1045,10 @@ StScrollBar {
           box-shadow: none;
           border-color: $bubble_borders_color;
           &:hover,&:focus { background-color: $bubble_hover_bg_color; }
-          &:active { background-color: $bubble_active_bg_color; }
+          &:active { 
+            background-color: $bubble_active_bg_color;
+            color: $bubble_active_fg_color;
+           }
           margin: 1.5em 1.5em 0;
         }
 
@@ -1053,7 +1065,7 @@ StScrollBar {
           border: 1px solid $bubble_borders_color;
           background-color: lighten($bubble_bg_color, 2%);
           &:hover,&:focus { background-color: $bubble_hover_bg_color; }
-          &:active { background-color: $bubble_active_bg_color; }
+          &:active { background-color: transparentize($bubble_fg_color, 0.84) }
           border-radius: 5px;
         }
 
@@ -1163,7 +1175,10 @@ StScrollBar {
       border: none;
       padding: 14px;
     }
-    &:active { background-color: $bubble_active_bg_color; }
+    &:active { 
+      background-color: $bubble_active_bg_color;
+      color: $bubble_active_fg_color;
+    }
 
     & > StIcon { icon-size: 16px; }
   }
@@ -1586,10 +1601,6 @@ StScrollBar {
     .notification-button {
       @extend %bubble_button;
       &:focus { box-shadow: none; }
-      &:active { 
-        background-color: $bubble_active_bg_color;
-        color: $bubble_fg_color;
-      }
       padding: 0 16px;
       min-height: 35px;
       border: none;

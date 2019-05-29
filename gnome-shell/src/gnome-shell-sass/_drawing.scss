@@ -181,7 +181,7 @@
     //
     // active osd button
     //
-      color: if($c==$bubble_bg_color, $bubble_fg_color, white);
+      color: if($c==$bubble_bg_color, $bubble_active_fg_color, white);
       border-color: if($c==$bubble_bg_color, $bubble_borders_color, $osd_borders_color);
       background-color: if($c==$bubble_bg_color, $bubble_active_bg_color, $selected_bg_color);
       // This should be none, but it's creating some issues with borders, so to
