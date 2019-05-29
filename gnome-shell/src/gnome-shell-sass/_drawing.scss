@@ -164,7 +164,7 @@
         $_bs: inset 0 1px lighten($osd_bg_color,20%);
       }
       @else if $c==$bubble_bg_color {
-        $_bg: darken($c, 12%);
+        $_bg: $bubble_hover_bg_color;
         $_fg: $bubble_fg_color;
         $_bc: $bubble_borders_color;
       }
@@ -183,9 +183,9 @@
     //
     // active osd button
     //
-      color: white;
-      border-color: if($c==$bubble_bg_color, null, $osd_borders_color);
-      background-color: $selected_bg_color;
+      color: if($c==$bubble_bg_color, $bubble_fg_color, white);
+      border-color: if($c==$bubble_bg_color, $bubble_borders_color, $osd_borders_color);
+      background-color: if($c==$bubble_bg_color, $bubble_active_bg_color, $selected_bg_color);
       // This should be none, but it's creating some issues with borders, so to
       // workaround it for now, use inset wich goes through a different code path.
       // see https://bugzilla.gnome.org/show_bug.cgi?id=752934
@@ -196,10 +196,10 @@
     //
     // insensitive osd button
     //
-      $_bg: transparentize(mix($insensitive_fg_color,$osd_bg_color,20%),0.3);
+      $_bg: transparentize(mix($insensitive_fg_color,if($c==$bubble_bg_color, $bubble_bg_color, $osd_bg_color), 20%),0.3);
   
       color: $insensitive_fg_color;
-      border-color: $osd_borders_color;
+      border-color: if($c==$bubble_bg_color, $bubble_borders_color, $osd_borders_color);
       background-color: $_bg;
       box-shadow: none;
       text-shadow: none;

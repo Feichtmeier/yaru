@@ -31,8 +31,8 @@ $bubble_bg_color: darken(white, 4%);
 $bubble_fg_color: darken(#2e3436, 6%);
 $bubble_borders_color: transparentize($bubble_fg_color, 0.75);
 $bubble_outer_borders_color: transparentize(black, 0.6);
-$bubble_hover_bg_color: transparentize($bubble_fg_color, 0.97);
-$bubble_active_bg_color: transparentize($bubble_fg_color, 0.85);
+$bubble_hover_bg_color: transparentize($bubble_fg_color, 0.95);
+$bubble_active_bg_color: transparentize($bubble_fg_color, 0.84);
 
 //insensitive state derived colors
 $insensitive_fg_color: mix($fg_color, $bg_color, 50%);
