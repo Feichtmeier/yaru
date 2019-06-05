@@ -30,8 +30,8 @@ $medium_radius: 9px;
 
 $_trough_color: transparentize($fg_color, 0.9);
 $_bubble_borders_color: lighten($borders_color, if($variant=='light', 0%, 5%));
-$_hover_bg_color: transparentize(black, 0.9);
-$_active_bg_color: transparentize(black, 0.8);
+$_hover_bg_color: lighten($bg_color,if($variant=='light', 5%, 1%));
+$_active_bg_color: if($variant == 'light', darken($bg_color, 14%), darken($bg_color, 9%));
 
 $font-size: 11;
 $font-family: Cantarell, Sans-Serif;
@@ -559,7 +559,7 @@ StScrollBar {
       box-shadow: inset 0 -1px 0px $_bubble_borders_color;
       font-weight: bold;
     }
-    &.selected { background-color: $_hover_bg_color; color: $fg_color; }
+    &.selected { background-color: transparentize(black, 0.9); color: $fg_color; }
     &:active { 
       background-color: $selected_bg_color;
       color: $selected_fg_color;
@@ -1325,7 +1325,7 @@ StScrollBar {
   }
 
   //search entry
-  .search-entry {
+  .search-entry, %search_entry {
     width: 320px;
     padding: 7px 9px;
     border-radius: 18px;
@@ -1885,12 +1885,29 @@ StScrollBar {
   border: none;
   background-color: transparent;
 
+  StEntry {
+    @extend %search_entry;
+  }
+
   .modal-dialog-button-box { spacing: 3px; }
   .modal-dialog-button {
     padding: 4px 18px;
+    border-radius: 18px;
+    $_hover_c: white;
+    &:hover,&:focus {
+      box-shadow: none;
+      background-color: $_hover_c;
+      border-color: $_hover_c;
+    }
     &:default {
       @include button(normal,$c:$selected_bg_color, $tc:$selected_fg_color);
-      &:hover,&:focus { @include button(hover,$c:$selected_bg_color, $tc:$selected_fg_color); }
+      border-color: $selected_bg_color;
+      &:hover,&:focus { 
+        @include button(hover,$c:$selected_bg_color, $tc:$selected_fg_color);
+        $_def_hover_c: lighten($selected_bg_color, 5%);
+        background-color: $_def_hover_c;
+        border-color: $_def_hover_c;
+      }
       &:active { @include button(active,$c:$selected_bg_color, $tc:$selected_fg_color); }
       &:insensitive { @include button(insensitive); }
 
