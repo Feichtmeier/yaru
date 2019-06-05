@@ -30,8 +30,8 @@ $medium_radius: 9px;
 
 $_trough_color: transparentize($fg_color, 0.9);
 $_bubble_borders_color: lighten($borders_color, if($variant=='light', 0%, 5%));
-$_hover_bg_color: if($variant=='light', darken($bg_color, 5%), lighten($bg_color, 4%));
-$_active_bg_color: if($variant == 'light', darken($bg_color, 14%), darken($bg_color, 6%));
+$_hover_bg_color: lighten($bg_color,if($variant=='light', 5%, 1%));
+$_active_bg_color: if($variant == 'light', darken($bg_color, 14%), darken($bg_color, 9%));
 
 $font-size: 11;
 $font-family: Cantarell, Sans-Serif;
@@ -145,11 +145,11 @@ StScrollBar {
   -barlevel-border-width: 1px;
   -slider-handle-radius: 8px;
   -slider-handle-border-width: 1px;
-  color: $fg_color; /* FIXME to match gtk, we'd need to style the border of the slider, not
+  -slider-handle-border-color: $borders_color;
+  color: $bg_color; /* FIXME to match gtk, we'd need to style the border of the slider, not
      the whole widget */
-  &:active {
-    color: $selected_bg_color; /* FIXME again, this should be border only */
-  }
+  &:hover { color: $_hover_bg_color; }
+  &:active { color: $_active_bg_color; }
 }
 
 /* Check Boxes */
@@ -925,8 +925,8 @@ StScrollBar {
     .world-clocks-button,
     .weather-button,
     .events-section-title {
-      &:hover, focus { background-color: darken($bg_color, 12%); }
-      &:active { background-color: darken($bg_color, 15%); }
+      &:hover, focus { background-color: $_hover_bg_color }
+      &:active { background-color: $_active_bg_color }
     }
 
     .datemenu-today-button .day-label {
@@ -1328,20 +1328,20 @@ StScrollBar {
   .search-entry {
     width: 320px;
     padding: 7px 9px;
-    border-radius: 6px;
-    color: $osd_fg_color;
-    background-color: $osd_bg_color;
-    border-color: transparent;
+    border-radius: 18px;
+    color: $fg_color;
+    background-color: $base_color;
+    border-color: $borders_color;
     &:focus {
       padding: 6px 8px;
       border-width: 2px;
       border-color: $selected_bg_color;
     }
 
-    .search-entry-icon { icon-size: 1em; padding: 0 4px; color: $osd_fg_color; }
+    .search-entry-icon { icon-size: 1em; padding: 0 4px; color: $fg_color; }
 
     &:hover, &:focus {
-      .search-entry-icon { color: transparentize($osd_fg_color,.3); }
+      .search-entry-icon { color: transparentize($fg_color,.3); }
     }
   }
 
@@ -1370,7 +1370,7 @@ StScrollBar {
 
   .list-search-result-content { spacing: 30px; }
   .list-search-result-title { color: darken($osd_fg_color,5%); spacing: 12px; }
-  .list-search-result-description { color: transparentize(darken($osd_fg_color,15%), 0.5); }
+  .list-search-result-description { color: darken($osd_fg_color,45%); }
   .list-search-provider-details { width: 150px; color: darken($osd_fg_color,5%); margin-top: 0.24em; }
   .list-search-provider-content { spacing: 20px; }
   .search-provider-icon { padding: 15px; }
@@ -1548,7 +1548,6 @@ StScrollBar {
   // Workspace pager
   .workspace-thumbnails { //container ala dash
     @extend %overview-panel;
-    border-right-color: $osd_bg_color;
     visible-width: 32px; //amount visible before hover
     spacing: 11px;
     padding: 8px;
@@ -1584,7 +1583,7 @@ StScrollBar {
 %status_text {
   font-size: 2em;
   font-weight: bold;
-  color: $fg_color;
+  color: $osd_fg_color;
 }
 
 /* NOTIFICATIONS & MESSAGE TRAY */
