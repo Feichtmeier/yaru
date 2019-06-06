@@ -1887,17 +1887,23 @@ StScrollBar {
 
   StEntry {
     @extend %search_entry;
+    border-radius: 5px;
   }
 
   .modal-dialog-button-box { spacing: 3px; }
   .modal-dialog-button {
     padding: 4px 18px;
-    border-radius: 18px;
     $_hover_c: white;
     &:hover,&:focus {
       box-shadow: none;
       background-color: $_hover_c;
       border-color: $_hover_c;
+    }
+    &:active {
+      $_active_c: $_active_bg_color;
+      box-shadow: none;
+      background-color: $_active_c;
+      border-color: $_active_c;
     }
     &:default {
       @include button(normal,$c:$selected_bg_color, $tc:$selected_fg_color);
@@ -1908,7 +1914,12 @@ StScrollBar {
         background-color: $_def_hover_c;
         border-color: $_def_hover_c;
       }
-      &:active { @include button(active,$c:$selected_bg_color, $tc:$selected_fg_color); }
+      &:active {
+        @include button(active,$c:$selected_bg_color, $tc:$selected_fg_color);
+        $_def_active_c: darken($selected_bg_color, 5%);
+        background-color: $_def_active_c;
+        border-color: $_def_active_c;
+      }
       &:insensitive { @include button(insensitive); }
 
     }
